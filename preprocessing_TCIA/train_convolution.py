@@ -1,9 +1,5 @@
 
 
-"""A very simple MNIST classifier.
-See extensive documentation at
-http://tensorflow.org/tutorials/mnist/beginners/index.md
-"""
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
