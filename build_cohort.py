@@ -35,12 +35,12 @@ def load_ref(reference_file, home_data_dir, pecent_valid, pecent_test):
 		collection, pid, date, _, _, description, _, _, _, UID, _, _, _, _, _,_,_,_,_,_ = dataref.ix[i,:]
 		print(pid, date, description)
 		# if a patient has scans acquired on several days, ignore the last ones which may be the post-operation scan
-		# Convert date from mm/dd/yy format to yyyymmdd
+		## Convert date from mm/dd/yy format to yyyymmdd
 		if int(date.split("/")[2]) < 18:
 			newdate = int("20"+ str(date.split("/")[2]).zfill(2)  + str(date.split("/")[1]).zfill(2) + str(date.split("/")[0]).zfill(2))
 		else:
 			newdate = int("19"+ str(date.split("/")[2]).zfill(2)  + str(date.split("/")[1]).zfill(2) + str(date.split("/")[0]).zfill(2))
-
+		## check how many dates associated with a patient 
 		if len(ScansDates[pid])==1:
 			print("only one acquisition date for this patient --> keep the scan")
 		elif ScansDates[pid].index(newdate) == len(ScansDates[pid]):
@@ -49,7 +49,8 @@ def load_ref(reference_file, home_data_dir, pecent_valid, pecent_test):
 		elif ScansDates[pid].index(newdate) == 0:
 			print("This is the first baseline scan for this patient --> keep")
 		else:
-			print("This is one of the intermediate baseline(s) scan for this patient --> keep or remove?")
+			print("This is one of the intermediate baseline(s) scan for this patient --> ignore?")
+			continue
 			
 		print(description.upper())
 		if 'AX' not in description.upper():
@@ -73,6 +74,11 @@ def load_ref(reference_file, home_data_dir, pecent_valid, pecent_test):
 				outputfolder_tmp = 'T2'
 		elif 'FLAIR' in description.upper():
 				outputfolder_tmp = 'T2_FLAIR'
+		elif any(ext in description.upper() for ext in ['GD', 'GAD']):
+			if 'PRE' in description.upper():
+				outputfolder_tmp = 'T1'
+			else:
+				outputfolder_tmp = 'T1_GD'
 		else:
 			print("description '%s' ignored." % description)
 			continue

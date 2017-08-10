@@ -119,13 +119,13 @@ if __name__=='__main__':
 	parser.add_argument(
 		'--home_data_dir',
 		type=str,
-		default='/ifs/data/razavianlab/brain/TCIA/',
+		default='/ifs/data/razavianlab/brain/',
 		help='Main dcm input directory.'
 	)
 	parser.add_argument(
 		'--output_data_dir',
 		type=str,
-		default='/ifs/data/razavianlab/brain/test_output/',
+		default='/ifs/data/razavianlab/brain/output/',
 		help='Output directory.'
 	)
 	parser.add_argument(
